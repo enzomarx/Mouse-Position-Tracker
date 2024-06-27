@@ -33,9 +33,18 @@ class MousePositionLogger(tk.Tk):
             self.instructions_label.config(text="Invalid time. Use numbers.")
             return
 
-        time.sleep(wait_time)
-        mouse_position = pyautogui.position()
+        self.start_countdown(int(wait_time))
 
+    def start_countdown(self, seconds):
+        if seconds <= 0:
+            self.capture_mouse_position()
+        else:
+            self.instructions_label.config(text=f"Capture in {seconds} seconds...")
+            self.after(1000, lambda: self.start_countdown(seconds - 1))
+
+    def capture_mouse_position(self):
+        self.instructions_label.config(text="Capturing mouse position...")
+        mouse_position = pyautogui.position()
         self.instructions_label.config(text=f"Mouse position: {mouse_position}")
 
         self.log_text.insert(tk.END, f"{mouse_position}\n")
