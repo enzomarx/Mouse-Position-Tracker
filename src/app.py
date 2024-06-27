@@ -10,17 +10,17 @@ class MousePositionLogger(tk.Tk):
 
         self.attributes('-topmost', True)
 
-        self.time_label = tk.Label(self, text="Tempo de espera (segundos):")
+        self.time_label = tk.Label(self, text="Waiting time (seconds):")
         self.time_label.pack(pady=10)
         self.time_entry = tk.Entry(self)
         self.time_entry.pack()
 
         self.time_entry.insert(0, "5")
 
-        self.instructions_label = tk.Label(self, text="Clique no botão para obter a posição do mouse")
+        self.instructions_label = tk.Label(self, text="Click button to get mouse position")
         self.instructions_label.pack(pady=5)
 
-        self.get_position_button = tk.Button(self, text="Obter Posição do Mouse", command=self.get_mouse_position)
+        self.get_position_button = tk.Button(self, text="Get Mouse Position", command=self.get_mouse_position)
         self.get_position_button.pack(pady=10)
 
         self.log_text = tk.Text(self, height=10, width=40)
@@ -30,13 +30,13 @@ class MousePositionLogger(tk.Tk):
         try:
             wait_time = float(self.time_entry.get())
         except ValueError:
-            self.instructions_label.config(text="Tempo inválido. Use números.")
+            self.instructions_label.config(text="Invalid time. Use numbers.")
             return
 
         time.sleep(wait_time)
         mouse_position = pyautogui.position()
 
-        self.instructions_label.config(text=f"Posição do mouse: {mouse_position}")
+        self.instructions_label.config(text=f"Mouse position: {mouse_position}")
 
         self.log_text.insert(tk.END, f"{mouse_position}\n")
         self.log_text.see(tk.END)  
